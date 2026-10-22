@@ -1,0 +1,3 @@
+import type { MetadataRoute } from "next";
+import { listPatterns } from "@/lib/patterns";
+export default function sitemap(): MetadataRoute.Sitemap { const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"; const paths = ["", "/crochet", "/knitting", "/diy", "/free-patterns", "/about", "/contact", "/privacy", "/terms"]; return [...paths.map((path) => ({ url: `${base}${path}`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: path ? 0.6 : 1 })), ...listPatterns(false).map((pattern) => ({ url: `${base}/patterns/${pattern.slug}`, lastModified: new Date(`${pattern.updatedAt || pattern.publishedAt}T12:00:00Z`), changeFrequency: "monthly" as const, priority: 0.8 }))]; }

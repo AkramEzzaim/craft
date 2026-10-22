@@ -1,0 +1,24 @@
+export type Category = "crochet" | "knitting" | "diy";
+export type Pattern = {
+  title: string;
+  slug: string;
+  description: string;
+  category: Category;
+  difficulty: string;
+  estimatedTime?: string;
+  featuredImage: string;
+  publishedAt: string;
+  updatedAt?: string;
+  status: "draft" | "published";
+  featured: boolean;
+  trending: boolean;
+  beginnerFriendly: boolean;
+  tags: string[];
+  author: string;
+  seoTitle?: string;
+  metaDescription?: string;
+  canonicalUrl?: string;
+  pinterestImage?: string;
+  patternDownloadUrl?: string;
+  body: string;
+};

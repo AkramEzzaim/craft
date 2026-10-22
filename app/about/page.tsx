@@ -1,0 +1,5 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+export const metadata: Metadata = { title: "About", description: "About Hearth & Thread and our approach to simple handmade projects." };
+export default function Page() { return <><section className="collection-hero"><div className="container-wide"><span className="eyebrow">Hello, maker</span><h1>A home for curious hands.</h1><p>Hearth & Thread is a place to slow down, learn a little, and enjoy the simple act of making.</p></div></section><div className="info-page container-wide"><h2>Made for the moments in between.</h2><p>We share approachable crochet, knitting, and DIY projects with clear steps and thoughtful details. Whether you have twenty minutes or a whole weekend, we hope you find something here worth making.</p><p>Every tutorial is reviewed before publication. We aim to give makers practical instructions, honest skill guidance, and room to add their own personality.</p><Link href="/free-patterns" className="button button-dark">Explore the patterns <ArrowRight size={18}/></Link></div></>; }
