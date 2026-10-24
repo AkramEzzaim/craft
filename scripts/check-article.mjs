@@ -1,0 +1,26 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import ts from "typescript";
+import React from "react";
+import * as jsxRuntime from "react/jsx-runtime";
+import { renderToStaticMarkup } from "react-dom/server";
+const source = fs.readFileSync("components/markdown-article.tsx", "utf8");
+const code = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, jsx: ts.JsxEmit.ReactJSX } }).outputText;
+const mod = { exports: {} };
+new Function("require", "module", "exports", code)((name) => {
+  if (name === "react/jsx-runtime") return jsxRuntime;
+  if (name === "next/image") return { default: props => React.createElement("img", { src: props.src, alt: props.alt, width: props.width, height: props.height }) };
+  throw new Error(`Unexpected import ${name}`);
+}, mod, mod.exports);
+const body = `A small motif.\n\n## About This Pattern\nEasy to make.\n\n## Materials\n- DK yarn\n\n## Abbreviations\n- **ch** — chain stitch\n\n## Instructions\n### Round 1 — Make the center\nWork a magic ring.\n\n**Stitch count:** 6 sts\n\n### Round 2 — Work outward\nAdd increases.\n\n## Important Notes\n- Mark each corner.\n\n## Common Mistakes\n### Too many stitches\nThe motif waves.\n\n**How to fix it:** Recount.\n\n## FAQ\n### Can I change yarn?\nYes.\n\n## More Photos\n![Finished hexagon](/images/patterns/hexagon/photo-a.png)`;
+const html = renderToStaticMarkup(React.createElement(mod.exports.MarkdownArticle, { source: body }));
+assert.match(html, /class="pattern-instruction-card"/);
+assert.match(html, /class="pattern-faq-card"/);
+assert.match(html, /class="pattern-section pattern-section-abbreviations"/);
+assert.match(html, /class="pattern-section pattern-section-important-notes"/);
+assert.match(html, /src="\/images\/patterns\/hexagon\/photo-a.png"/);
+assert.match(html, /id="instructions"/);
+const css = fs.readFileSync("app/globals.css", "utf8");
+if (process.env.RENDER_QA) fs.writeFileSync(process.env.RENDER_QA, `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}</style></head><body><main class="article-layout container-wide"><div class="article-body">${html}</div></main></body></html>`);
+assert.ok(css.indexOf("@media(max-width:760px){.pattern-instruction-card") < css.indexOf(".pattern-section-abbreviations ul{grid-template-columns:1fr}"));
+console.log("Public round cards, notes, abbreviations, FAQ, photos, anchors, and mobile rules verified.");

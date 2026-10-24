@@ -34,6 +34,7 @@ function readPattern(file: string): Pattern {
     title: data.title,
     slug: data.slug,
     description: data.description,
+    subtitle: data.subtitle,
     category: data.category as Category,
     difficulty: data.difficulty,
     estimatedTime: data.estimatedTime,
@@ -46,12 +47,18 @@ function readPattern(file: string): Pattern {
     trending: data.trending === "true",
     beginnerFriendly: data.beginnerFriendly === "true",
     tags: data.tags ? data.tags.split(",").map((tag) => tag.trim()).filter(Boolean) : [],
+    primaryKeyword: data.primaryKeyword,
     author: data.author,
     seoTitle: data.seoTitle,
     metaDescription: data.metaDescription,
+    ogTitle: data.ogTitle,
+    ogDescription: data.ogDescription,
+    pinterestTitle: data.pinterestTitle,
+    pinterestDescription: data.pinterestDescription,
     canonicalUrl: data.canonicalUrl,
     pinterestImage: data.pinterestImage,
     patternDownloadUrl: data.patternDownloadUrl,
+    relatedSlugs: data.relatedPatterns ? data.relatedPatterns.split(",").map(value => value.trim()).filter(value => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)) : [],
     body: match[2].trim(),
   };
 }
@@ -83,7 +90,10 @@ export function featuredPatterns(): Pattern[] {
 
 export function relatedPatterns(pattern: Pattern, limit = 3): Pattern[] {
   return listPatterns().filter((item) => item.slug !== pattern.slug)
-    .sort((a, b) => Number(b.category === pattern.category) - Number(a.category === pattern.category))
+    .sort((a, b) => {
+      const rank = (item: Pattern) => (pattern.relatedSlugs?.includes(item.slug) ? 100 : 0) + (item.category === pattern.category ? 10 : 0) + item.tags.filter(tag => pattern.tags.includes(tag)).length * 2 + (pattern.primaryKeyword && `${item.title} ${item.description}`.toLowerCase().includes(pattern.primaryKeyword.toLowerCase()) ? 3 : 0);
+      return rank(b) - rank(a);
+    })
     .slice(0, limit);
 }
 

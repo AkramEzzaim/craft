@@ -3,6 +3,7 @@ export type Pattern = {
   title: string;
   slug: string;
   description: string;
+  subtitle?: string;
   category: Category;
   difficulty: string;
   estimatedTime?: string;
@@ -15,11 +16,17 @@ export type Pattern = {
   trending: boolean;
   beginnerFriendly: boolean;
   tags: string[];
+  primaryKeyword?: string;
   author: string;
   seoTitle?: string;
   metaDescription?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  pinterestTitle?: string;
+  pinterestDescription?: string;
   canonicalUrl?: string;
   pinterestImage?: string;
   patternDownloadUrl?: string;
+  relatedSlugs?: string[];
   body: string;
 };
