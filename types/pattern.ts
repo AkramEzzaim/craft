@@ -7,6 +7,7 @@ export type Pattern = {
   difficulty: string;
   estimatedTime?: string;
   featuredImage: string;
+  imageAlt?: string;
   publishedAt: string;
   updatedAt?: string;
   status: "draft" | "published";

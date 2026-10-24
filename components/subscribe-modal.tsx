@@ -44,7 +44,7 @@ export function SubscribeModal({ patternId, patternTitle }: Props) {
     setLoading(true);
     try {
       const response = await fetch("/api/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({
-        name, email, consent, website: String(form.get("website") || ""), pattern_id: patternId,
+        name, email, consent, website: String(form.get("website") || ""), pattern_id: patternId, pattern_title: patternTitle,
         source_url: window.location.href,
         utm_source: params.get("utm_source") || "",
         utm_medium: params.get("utm_medium") || "",

@@ -7,7 +7,7 @@ import { patternUrl } from "@/lib/patterns";
 export function PatternCard({ pattern }: { pattern: Pattern }) {
   return <article className="pattern-card group">
     <Link href={patternUrl(pattern)} className="card-image-wrap" aria-label={`View ${pattern.title}`}>
-      <Image src={pattern.featuredImage} alt={pattern.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="card-image"/>
+      <Image src={pattern.featuredImage} alt={pattern.imageAlt || pattern.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="card-image"/>
       {pattern.trending && <span className="image-badge">Popular project</span>}
     </Link>
     <div className="card-content">

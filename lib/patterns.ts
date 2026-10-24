@@ -38,6 +38,7 @@ function readPattern(file: string): Pattern {
     difficulty: data.difficulty,
     estimatedTime: data.estimatedTime,
     featuredImage: data.featuredImage,
+    imageAlt: data.imageAlt,
     publishedAt: data.publishedAt,
     updatedAt: data.updatedAt,
     status: data.status as Pattern["status"],

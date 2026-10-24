@@ -23,7 +23,8 @@ export default function Home() {
       <Link href="/knitting" className="category-tile tile-knitting"><div><span>02 / slow & cozy</span><h3>Knitting</h3><p>Warm layers and simple textures.</p></div><ArrowUpRight size={24}/></Link>
       <Link href="/diy" className="category-tile tile-diy"><div><span>03 / make it yours</span><h3>DIY crafts</h3><p>Thoughtful projects for everyday life.</p></div><ArrowUpRight size={24}/></Link>
     </div></div></section>
-    <PatternSection eyebrow="On your needles" title="Latest crochet projects" patterns={byCategory("crochet").slice(0, 3)} href="/crochet"/>
+    <PatternSection eyebrow="Fresh from the studio" title="Latest patterns" patterns={patterns.slice(0, 3)} href="/free-patterns"/>
+    <PatternSection eyebrow="One stitch at a time" title="Crochet projects to try" patterns={byCategory("crochet").slice(0, 3)} href="/crochet"/>
     <PatternSection eyebrow="A little weekend project" title="Latest DIY tutorials" patterns={byCategory("diy").slice(0, 3)} href="/diy"/>
     <PatternSection eyebrow="An easy place to begin" title="Beginner-friendly patterns" patterns={patterns.filter((pattern) => pattern.beginnerFriendly).slice(0, 3)} href="/free-patterns"/>
     <NewsletterBanner/>

@@ -10,11 +10,11 @@ A responsive craft-content site built with Next.js App Router, TypeScript, Tailw
 4. Run `npm run dev` and open `http://localhost:3000`.
 5. Run `npm run check:content`, `npm run typecheck`, `npm run lint`, and `npm run build` before deployment.
 
-The three included articles are **drafts**, shown only during local development for editorial review. Production always filters out drafts, even if `ENABLE_DRAFT_PREVIEW=true` is set. Review the project instructions, stitch counts, materials, and images, then change `status: "draft"` to `status: "published"` in each approved Markdown file. No generated tutorial should be published without human review.
+The eight included articles are **drafts**, shown only during local development for editorial review. Production always filters out drafts, even if `ENABLE_DRAFT_PREVIEW=true` is set. Review the project instructions, stitch counts, materials, and images, then change `status: "draft"` to `status: "published"` in each approved Markdown file. No generated tutorial should be published without human review. See [docs/crochet-editorial-review.md](docs/crochet-editorial-review.md) for the five new crochet demos.
 
 ## Content
 
-Articles live in `content/patterns/*.md`. Frontmatter uses one `key: value` per line, with comma-separated `tags`. Supported fields are `title`, `slug`, `description`, `category`, `difficulty`, `estimatedTime`, `featuredImage`, `publishedAt`, `updatedAt`, `status`, `featured`, `trending`, `beginnerFriendly`, `tags`, `author`, `seoTitle`, `metaDescription`, `canonicalUrl`, `pinterestImage`, and `patternDownloadUrl`. The Markdown body supports paragraphs, level 2 and 3 headings, unordered and ordered lists, and bold text. This deliberately small format keeps content portable and safe to render. For richer MDX later, replace only the parser and article renderer.
+Articles live in `content/patterns/*.md`. Frontmatter uses one `key: value` per line, with comma-separated `tags`. Supported fields are `title`, `slug`, `description`, `category`, `difficulty`, `estimatedTime`, `featuredImage`, `imageAlt`, `publishedAt`, `updatedAt`, `status`, `featured`, `trending`, `beginnerFriendly`, `tags`, `author`, `seoTitle`, `metaDescription`, `canonicalUrl`, `pinterestImage`, and `patternDownloadUrl`. The Markdown body supports paragraphs, level 2 and 3 headings, unordered and ordered lists, and bold text. This deliberately small format keeps content portable and safe to render. For richer MDX later, replace only the parser and article renderer.
 
 Use `patternDownloadUrl` for a public, same-site URL to a reviewed pattern PDF or instruction section. The API verifies that it is a local path before returning it. Files in `/public` are public, so the URL is an access convenience after signup, not a secure paywall.
 
@@ -36,4 +36,4 @@ The project has no database and no automatic content publishing. `sitemap.xml` i
 
 ## Assets
 
-The four craft photographs in `public/images` were generated for this project with the built-in ImageGen tool. They are illustrative editorial images. Replace any picture that does not accurately show the final reviewed pattern.
+The craft photographs in `public/images` were generated for this project with the built-in ImageGen tool. They are illustrative editorial images. Replace any picture that does not accurately show the final reviewed pattern.

@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const links = [
   ["Home", "/"], ["Crochet", "/crochet"], ["Knitting", "/knitting"],
-  ["DIY", "/diy"], ["Free Patterns", "/free-patterns"],
+  ["DIY", "/diy"], ["Free Patterns", "/free-patterns"], ["About", "/about"],
 ] as const;
 
 export function SiteHeader() {
