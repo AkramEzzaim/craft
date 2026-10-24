@@ -37,9 +37,18 @@ function section(title: string, blocks: Block[], key: number) {
   return <section className={`pattern-section pattern-section-${id}`} key={key}><h2 id={id}>{title}</h2>{introduction.map(render)}<div className="pattern-card-stack">{groups.map((group, index) => title === "FAQ" ? <details className="pattern-faq-card" key={index}><summary>{group.title}</summary><div>{group.content.map(render)}</div></details> : <article className="pattern-instruction-card" key={index}><h3>{group.title}</h3>{group.content.map(render)}</article>)}</div></section>;
 }
 export function MarkdownArticle({ source }: { source: string }) {
-  const blocks = parse(source); const output: ReactNode[] = []; let currentTitle = ""; let current: Block[] = []; let key = 0;
-  function flush() { if (currentTitle) output.push(section(currentTitle, current, key++)); else output.push(...current.map(render)); current = []; }
+  const blocks = parse(source); const output: ReactNode[] = []; const sections: { title: string; content: Block[] }[] = []; let currentTitle = ""; let current: Block[] = []; let key = 0;
+  function flush() { sections.push({ title: currentTitle, content: current }); current = []; }
   for (const block of blocks) if (block.type === "h2") { flush(); currentTitle = block.text; } else current.push(block);
   flush();
+  for (let index = 0; index < sections.length; index++) {
+    const item = sections[index];
+    const next = sections[index + 1];
+    if (item.title === "Abbreviations" && next?.title === "Instructions") {
+      output.push(<div className="pattern-main-grid" key={key++}><div className="pattern-main-copy">{section(next.title, next.content, key++)}</div><aside className="pattern-abbreviation-sidebar" aria-label="Stitch abbreviations">{section(item.title, item.content, key++)}</aside></div>);
+      index++; continue;
+    }
+    if (item.title) output.push(section(item.title, item.content, key++)); else output.push(...item.content.map(render));
+  }
   return <div className="article-prose">{output}</div>;
 }

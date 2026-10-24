@@ -17,10 +17,13 @@ const html = renderToStaticMarkup(React.createElement(mod.exports.MarkdownArticl
 assert.match(html, /class="pattern-instruction-card"/);
 assert.match(html, /class="pattern-faq-card"/);
 assert.match(html, /class="pattern-section pattern-section-abbreviations"/);
+assert.match(html, /class="pattern-main-grid"/);
+assert.ok(html.indexOf("Round 1") < html.indexOf("Stitch abbreviations"), "abbreviations follow the pattern in mobile reading order");
 assert.match(html, /class="pattern-section pattern-section-important-notes"/);
 assert.match(html, /src="\/images\/patterns\/hexagon\/photo-a.png"/);
 assert.match(html, /id="instructions"/);
 const css = fs.readFileSync("app/globals.css", "utf8");
-if (process.env.RENDER_QA) fs.writeFileSync(process.env.RENDER_QA, `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}</style></head><body><main class="article-layout container-wide"><div class="article-body">${html}</div></main></body></html>`);
+if (process.env.RENDER_QA) fs.writeFileSync(process.env.RENDER_QA, `<!doctype html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}</style></head><body><main class="article-layout container-wide"><aside class="article-sidebar"></aside><div class="article-body">${html}</div></main></body></html>`);
 assert.ok(css.indexOf("@media(max-width:760px){.pattern-instruction-card") < css.indexOf(".pattern-section-abbreviations ul{grid-template-columns:1fr}"));
+assert.match(css, /@media\(max-width:760px\)\{\.pattern-main-grid\{grid-template-columns:1fr/);
 console.log("Public round cards, notes, abbreviations, FAQ, photos, anchors, and mobile rules verified.");
