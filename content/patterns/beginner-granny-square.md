@@ -5,6 +5,8 @@ description: "Learn the classic granny-square rhythm with three colorful rounds 
 category: "crochet"
 difficulty: "Beginner"
 estimatedTime: "45 minutes"
+yarn: "Medium-weight cotton yarn"
+hook: "4 mm crochet hook"
 featuredImage: "/images/patterns/beginner-granny-square.png"
 imageAlt: "Cream, sage, and pink granny square with visible crochet clusters and four corners"
 publishedAt: "2026-10-24"
@@ -25,6 +27,10 @@ A granny square is a satisfying first motif: one small center grows into a tidy 
 - Skill level: beginner
 - Construction: worked in joined rounds
 - Abbreviations: ch = chain, dc = double crochet, sl st = slip stitch
+
+## Variations
+- Use a single color for all three rounds to focus on stitch placement before trying color changes.
+- Try a thicker yarn and its recommended hook for a larger motif; check the finished size before joining squares.
 
 ## Materials
 - Three small amounts of medium-weight cotton yarn in different colors

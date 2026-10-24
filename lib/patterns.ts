@@ -14,6 +14,11 @@ function scalar(value: string): string {
   return trimmed;
 }
 
+function optionalJson(value?: string): unknown {
+  if (!value) return undefined;
+  try { return JSON.parse(value); } catch { return value; }
+}
+
 function readPattern(file: string): Pattern {
   const raw = fs.readFileSync(path.join(directory, file), "utf8");
   const match = /^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/.exec(raw);
@@ -30,6 +35,9 @@ function readPattern(file: string): Pattern {
   if (!categorySet.has(data.category)) throw new Error(`Invalid category in ${file}`);
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(data.slug)) throw new Error(`Invalid slug in ${file}`);
   if (!/^(draft|published)$/.test(data.status)) throw new Error(`Invalid status in ${file}`);
+  const structuredKeys = ["about", "variations", "mistakes", "materials", "tools", "abbreviations", "rounds", "mainPatternIntro", "notes", "gallery", "faq"];
+  const structuredFields = Object.fromEntries(structuredKeys.filter((key) => data[key]).map((key) => [key, optionalJson(data[key])]));
+  const articleData = optionalJson(data.articleData);
   return {
     title: data.title,
     slug: data.slug,
@@ -59,6 +67,9 @@ function readPattern(file: string): Pattern {
     pinterestImage: data.pinterestImage,
     patternDownloadUrl: data.patternDownloadUrl,
     relatedSlugs: data.relatedPatterns ? data.relatedPatterns.split(",").map(value => value.trim()).filter(value => /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)) : [],
+    yarn: data.yarn,
+    hook: data.hook,
+    articleData: { ...structuredFields, ...(articleData && typeof articleData === "object" && !Array.isArray(articleData) ? articleData : {}) },
     body: match[2].trim(),
   };
 }

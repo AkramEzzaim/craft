@@ -4,9 +4,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Clock3, Sparkles } from "lucide-react";
 import { MarkdownArticle } from "@/components/markdown-article";
+import { CrochetPatternArticle } from "@/components/crochet-pattern-article";
 import { PatternCard } from "@/components/pattern-card";
 import { SubscribeModal } from "@/components/subscribe-modal";
 import { getPattern, isDraftPreview, listPatterns, relatedPatterns } from "@/lib/patterns";
+import "./crochet-article.css";
 
 type Props = { params: Promise<{ slug: string }> };
 export function generateStaticParams() { return listPatterns().map((pattern) => ({ slug: pattern.slug })); }
@@ -28,6 +30,11 @@ export default async function Page({ params }: Props) {
   const related = relatedPatterns(pattern);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const jsonLd = { "@context": "https://schema.org", "@type": "CreativeWork", headline: pattern.title, description: pattern.description, image: new URL(pattern.featuredImage, siteUrl).toString(), datePublished: pattern.publishedAt, dateModified: pattern.updatedAt || pattern.publishedAt, author: { "@type": "Organization", name: pattern.author }, url: new URL(`/patterns/${pattern.slug}`, siteUrl).toString() };
+  if (pattern.category === "crochet") return <>
+    {pattern.status === "draft" && isDraftPreview() && <div className="draft-notice">Draft preview · This tutorial needs human review before publication.</div>}
+    {pattern.status === "published" && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}/>}
+    <CrochetPatternArticle pattern={pattern} related={related}/>
+  </>;
   return <>
     {pattern.status === "draft" && isDraftPreview() && <div className="draft-notice">Draft preview · This tutorial needs human review before publication.</div>}
     {pattern.status === "published" && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}/>}

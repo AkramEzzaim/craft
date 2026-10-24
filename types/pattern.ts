@@ -28,5 +28,8 @@ export type Pattern = {
   pinterestImage?: string;
   patternDownloadUrl?: string;
   relatedSlugs?: string[];
+  yarn?: string;
+  hook?: string;
+  articleData?: unknown;
   body: string;
 };
