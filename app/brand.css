@@ -94,3 +94,13 @@ main h1,main h2,main h3{font-weight:700!important;letter-spacing:-.035em!importa
 .mobile-categories{display:flex;flex-direction:column;padding:4px 0 10px 16px;background:#f7f0e5}
 .mobile-nav .mobile-categories a{min-height:42px;padding:11px 12px;font-size:15px;font-weight:600;border-bottom:1px solid #e9ddcc}
 .mobile-nav .mobile-categories a:last-child{border-bottom:0}
+
+/* Pattern library pagination */
+.pattern-pagination{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin:58px 0 74px;padding-top:26px;border-top:1px solid var(--line)}
+.pattern-page-summary{color:var(--muted);font-size:13px}
+.pattern-page-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pattern-page-links a{display:inline-flex;align-items:center;justify-content:center;min-width:42px;min-height:42px;padding:8px 12px;border:1px solid #d4ddcf;border-radius:5px;background:#fffdf7;color:var(--forest);font-size:14px;font-weight:700;transition:background-color .15s,border-color .15s}
+.pattern-page-links a:hover{border-color:var(--forest);background:#edf2e9}
+.pattern-page-links a.active,.pattern-page-links a.active:hover{border-color:var(--forest);background:var(--forest);color:#fff}
+.pattern-page-links .pattern-page-edge{padding-inline:15px}
+@media(max-width:760px){.pattern-pagination{justify-content:center;margin-top:42px}.pattern-page-summary{width:100%;text-align:center}.pattern-page-links{justify-content:center}}
