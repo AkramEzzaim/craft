@@ -5,6 +5,7 @@ import type { Category, Pattern } from "@/types/pattern";
 
 const directory = path.join(process.cwd(), "content", "patterns");
 const categorySet = new Set(["crochet", "knitting", "diy"]);
+const formerAuthor = "Hearth & Thread Studio";
 
 function scalar(value: string): string {
   const trimmed = value.trim();
@@ -56,7 +57,7 @@ function readPattern(file: string): Pattern {
     beginnerFriendly: data.beginnerFriendly === "true",
     tags: data.tags ? data.tags.split(",").map((tag) => tag.trim()).filter(Boolean) : [],
     primaryKeyword: data.primaryKeyword,
-    author: data.author,
+    author: data.author === formerAuthor ? "Loop & Bloom Crochet" : data.author,
     seoTitle: data.seoTitle,
     metaDescription: data.metaDescription,
     ogTitle: data.ogTitle,
@@ -116,7 +117,7 @@ export function searchPatterns(query: string): Pattern[] {
   const terms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
   if (!terms.length) return [];
   return listPatterns().filter((pattern) => {
-    const haystack = `${pattern.title} ${pattern.description} ${pattern.category} ${pattern.difficulty} ${pattern.tags.join(" ")}`.toLowerCase();
+    const haystack = `${pattern.title} ${pattern.subtitle || ""} ${pattern.description} ${pattern.category} ${pattern.difficulty} ${pattern.estimatedTime || ""} ${pattern.yarn || ""} ${pattern.hook || ""} ${pattern.tags.join(" ")} ${pattern.primaryKeyword || ""} ${pattern.body}`.toLowerCase();
     return terms.every((term) => haystack.includes(term));
   });
 }

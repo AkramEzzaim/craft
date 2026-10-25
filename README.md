@@ -1,4 +1,4 @@
-# Hearth & Thread
+# Loop & Bloom Crochet
 
 A responsive craft-content site built with Next.js App Router, TypeScript, Tailwind CSS, and local Markdown articles. It is designed for Vercel and keeps the subscriber workflow behind a server-side API route.
 

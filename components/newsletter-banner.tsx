@@ -1,12 +1,10 @@
 import Link from "next/link";
-import { ArrowRight, Heart } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { PatternNewsletter } from "@/components/pattern-newsletter";
+import { listPatterns } from "@/lib/patterns";
 
 export function NewsletterBanner() {
-  return <section className="newsletter-wrap container-wide">
-    <div className="newsletter-card">
-      <div className="newsletter-icon"><Heart size={24} strokeWidth={1.4}/></div>
-      <div><span className="eyebrow">A pattern for your next quiet afternoon</span><h2>Good things take a little making.</h2><p>Explore our free projects and choose one to make your own.</p></div>
-      <Link className="button button-light" href="/free-patterns">Find a free pattern <ArrowRight size={18}/></Link>
-    </div>
-  </section>;
+  const first = listPatterns(false).find((pattern) => pattern.category === "crochet");
+  if (first) return <PatternNewsletter patternId={first.slug} patternTitle={first.title} home/>;
+  return <section className="newsletter-pending container-wide" id="newsletter"><span className="eyebrow">From the studio</span><h2>New patterns are growing here.</h2><p>Our first crochet tutorials are being prepared. See what is ready to make.</p><Link className="button button-dark" href="/free-patterns">Browse free patterns <ArrowRight size={18} aria-hidden="true"/></Link></section>;
 }

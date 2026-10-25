@@ -8,7 +8,6 @@ import { CrochetPatternArticle } from "@/components/crochet-pattern-article";
 import { PatternCard } from "@/components/pattern-card";
 import { SubscribeModal } from "@/components/subscribe-modal";
 import { getPattern, isDraftPreview, listPatterns, relatedPatterns } from "@/lib/patterns";
-import "./crochet-article.css";
 
 type Props = { params: Promise<{ slug: string }> };
 export function generateStaticParams() { return listPatterns().map((pattern) => ({ slug: pattern.slug })); }

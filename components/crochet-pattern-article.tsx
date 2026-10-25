@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Clock3, Lightbulb, Scissors, Sparkles } from "lucide-react";
+import { ArrowRight, Clock3, Lightbulb, Scissors } from "lucide-react";
 import { MarkdownArticle } from "@/components/markdown-article";
 import { PatternCard } from "@/components/pattern-card";
 import { PatternFAQ } from "@/components/pattern-faq";
@@ -20,7 +20,7 @@ function PatternHero({ pattern }: { pattern: Pattern }) {
 }
 
 function ProjectMeta({ pattern, yarn, hook }: { pattern: Pattern; yarn?: string; hook?: string }) {
-  const facts = [{ label: "Skill level", value: pattern.difficulty, icon: <Sparkles size={19} aria-hidden="true"/> }];
+  const facts = [{ label: "Skill level", value: pattern.difficulty, icon: <span aria-hidden="true">◉</span> }];
   if (pattern.estimatedTime) facts.push({ label: "Time", value: pattern.estimatedTime, icon: <Clock3 size={19} aria-hidden="true"/> });
   if (yarn) facts.push({ label: "Yarn", value: yarn, icon: <span className="craft-meta-symbol" aria-hidden="true">✳</span> });
   if (hook) facts.push({ label: "Hook", value: hook, icon: <Scissors size={19} aria-hidden="true"/> });
@@ -82,9 +82,9 @@ export function CrochetPatternArticle({ pattern, related }: { pattern: Pattern; 
       </div>
     </article>
 
-    {related.length > 0 && <section className="craft-related container-wide" aria-labelledby="craft-related-title"><div className="craft-section-heading"><div><span className="eyebrow">Keep making</span><h2 id="craft-related-title">More patterns to try</h2></div><Link href="/crochet" className="text-link">Browse crochet <ArrowRight size={17} aria-hidden="true"/></Link></div><div className="card-grid">{related.map((item) => <PatternCard key={item.slug} pattern={item}/>)}</div></section>}
+    <section className="craft-related container-wide" aria-labelledby="craft-related-title"><div className="craft-section-heading"><div><span className="eyebrow">Keep making</span><h2 id="craft-related-title">More patterns to try</h2></div><Link href="/crochet" className="text-link">Browse crochet <ArrowRight size={17} aria-hidden="true"/></Link></div>{related.length > 0 ? <div className="card-grid">{related.map((item) => <PatternCard key={item.slug} pattern={item}/>)}</div> : <p className="craft-related-empty">More patterns are being prepared. In the meantime, explore the <Link href="/beginner">beginner crochet collection</Link> or <Link href="/free-patterns">browse every published project</Link>.</p>}</section>
 
-    <section className="craft-share container-wide" aria-labelledby="craft-share-title"><div><span className="eyebrow">Made something of your own?</span><h2 id="craft-share-title">We&apos;d love to see what you create.</h2><p>Share your project with the Hearth &amp; Thread community by getting in touch with our studio, or save this pattern for later.</p></div><div className="craft-share-actions"><Link href="/contact" className="button button-dark">Share your pattern <ArrowRight size={18} aria-hidden="true"/></Link><a className="button button-outline" href={`https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(new URL(`/patterns/${pattern.slug}`, process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").toString())}&media=${encodeURIComponent(new URL(pattern.pinterestImage || pattern.featuredImage, process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").toString())}&description=${encodeURIComponent(pattern.pinterestDescription || pattern.description)}`} target="_blank" rel="noopener noreferrer">Save on Pinterest</a></div></section>
+    <section className="craft-share container-wide" aria-labelledby="craft-share-title"><div><span className="eyebrow">Made something of your own?</span><h2 id="craft-share-title">We&apos;d love to see what you create.</h2><p>Share your project with Loop &amp; Bloom Crochet, or save this pattern for a quiet afternoon.</p></div><div className="craft-share-actions"><Link href="/contact" className="button button-dark">Share your pattern <ArrowRight size={18} aria-hidden="true"/></Link><a className="button button-outline" href={`https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(new URL(`/patterns/${pattern.slug}`, process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").toString())}&media=${encodeURIComponent(new URL(pattern.pinterestImage || pattern.featuredImage, process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").toString())}&description=${encodeURIComponent(pattern.pinterestDescription || pattern.description)}`} target="_blank" rel="noopener noreferrer">Save on Pinterest</a></div></section>
     <PatternNewsletter patternId={pattern.slug} patternTitle={pattern.title}/>
   </>;
 }
