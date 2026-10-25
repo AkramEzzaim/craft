@@ -28,8 +28,7 @@ const inspiration = [
 
 export default function Home() {
   const patterns = listPatterns().filter((pattern) => pattern.category === "crochet");
-  const popular = [...patterns.filter((pattern) => pattern.trending || pattern.featured), ...patterns.filter((pattern) => !pattern.trending && !pattern.featured)].slice(0, 6);
-  const hasCuratedPatterns = patterns.some((pattern) => pattern.trending || pattern.featured);
+  const popular = [...patterns.filter((pattern) => pattern.trending || pattern.featured), ...patterns.filter((pattern) => !pattern.trending && !pattern.featured)].slice(0, 3);
   const beginner = discoveryPatterns(patterns, "beginner").slice(0, 3);
   return <div className="home-page">
     {isDraftPreview() && <div className="draft-notice">Editorial preview includes draft tutorials awaiting review. Drafts are hidden in production.</div>}
@@ -41,11 +40,9 @@ export default function Home() {
 
     <section className="bloom-categories section container-wide" aria-labelledby="categories-title"><div className="section-heading"><div><span className="eyebrow">Follow the yarn</span><h2 id="categories-title">What would you like to crochet?</h2><p>Find a project for your mood, your time, and the yarn in your basket.</p></div><Link href="/crochet" className="text-link">All crochet ideas <ArrowRight size={17} aria-hidden="true"/></Link></div><div className="bloom-category-grid">{categoryOrder.map((key, index) => { const category = discovery[key]; return <Link href={`/${key}`} className={`bloom-category-card category-${category.color}`} key={key}><span className="category-number">0{index + 1}</span><div className="category-visual"><Image src={categoryImages[key]} alt="" fill sizes="(max-width: 600px) 42vw, (max-width: 1000px) 30vw, 190px"/></div><div className="category-copy"><h3>{category.title.replace(" Patterns", "").replace("Crochet for ", "")}</h3><p>{category.short}</p></div><ArrowUpRight size={21} aria-hidden="true"/></Link>; })}</div></section>
 
-    <PatternSection eyebrow={hasCuratedPatterns ? "The patterns people come back to" : "From the pattern shelf"} title={hasCuratedPatterns ? "Popular right now" : "A pattern to explore"} description="Find a lovely project and make it your own." patterns={popular} href="/free-patterns" linkLabel="View all patterns"/>
+    <PatternSection eyebrow="From the pattern shelf" title="A pattern to explore" description="Find a lovely project and make it your own." patterns={popular} href="/free-patterns" linkLabel="View all patterns"/>
 
     <section className="beginner-feature container-wide" aria-labelledby="beginner-title"><div className="beginner-feature-copy"><span className="eyebrow">Your first stitches</span><h2 id="beginner-title">New to crochet? <em>Start here.</em></h2><p>Simple patterns, clear explanations, and small projects to help you build confidence one stitch at a time.</p><Link href="/beginner" className="button button-dark">Explore Beginner Patterns <ArrowRight size={17} aria-hidden="true"/></Link></div><div className="beginner-feature-list">{beginner.length ? beginner.map((pattern, index) => <Link href={`/patterns/${pattern.slug}`} className="beginner-mini" key={pattern.slug}><span>0{index + 1}</span><div><strong>{pattern.title}</strong><small>{pattern.difficulty}{pattern.estimatedTime ? ` · ${pattern.estimatedTime}` : ""}</small></div><ArrowUpRight size={18} aria-hidden="true"/></Link>) : <p>Beginner patterns are being reviewed. Browse the published collection while this section grows.</p>}</div></section>
-
-    <PatternSection eyebrow="Fresh off the hook" title="Latest Free Patterns" description="New projects from the pattern collection." patterns={patterns.slice(0, 3)} href="/free-patterns" linkLabel="View All Patterns"/>
 
     <section className="bloom-inspiration container-wide" aria-labelledby="inspiration-title"><div className="section-heading"><div><span className="eyebrow">A little color for your next make</span><h2 id="inspiration-title">A little crochet inspiration</h2><p>Flowers, squares, coasters, and sweet little details to spark an idea.</p></div></div><div className="inspiration-grid">{inspiration.map((item) => <Link href={item.href} className={`inspiration-tile ${item.className}`} key={item.src}><Image src={item.src} alt={item.alt} fill sizes="(max-width: 760px) 50vw, 33vw"/><span>{item.title} <ArrowUpRight size={16} aria-hidden="true"/></span></Link>)}</div></section>
 
