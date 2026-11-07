@@ -1,0 +1,61 @@
+/* Motion system. Reveals use the individual translate/scale properties so they compose with the
+   existing transform-based rotations and hover lifts instead of replacing them. */
+:root{--ease-out:cubic-bezier(.22,1,.36,1);--ease-spring:cubic-bezier(.34,1.36,.64,1);--reveal-duration:.95s}
+
+/* Scroll reveals: hidden by the server-rendered rule in lib/reveal.ts, played once data-revealed is set. */
+html.motion-ready [data-reveal][data-revealed=""]{animation:var(--reveal-duration) var(--ease-out) var(--reveal-delay,0ms) both;will-change:opacity,translate}
+html.motion-ready [data-reveal=up][data-revealed=""]{animation-name:reveal-up}
+html.motion-ready [data-reveal=rise][data-revealed=""]{animation-name:reveal-rise;animation-duration:1.1s}
+html.motion-ready [data-reveal=fade][data-revealed=""]{animation-name:reveal-fade;animation-duration:1.1s}
+html.motion-ready [data-reveal=left][data-revealed=""]{animation-name:reveal-left}
+html.motion-ready [data-reveal=right][data-revealed=""]{animation-name:reveal-right}
+html.motion-ready [data-reveal=zoom][data-revealed=""]{animation-name:reveal-zoom;will-change:opacity,translate,scale}
+html.motion-ready [data-reveal=photo][data-revealed=""]{animation-name:reveal-photo;animation-duration:1.2s;animation-timing-function:var(--ease-spring);will-change:opacity,translate,scale}
+html.motion-ready [data-reveal=curtain][data-revealed=""]{animation-name:reveal-curtain;animation-duration:1.15s;will-change:clip-path}
+html.motion-ready [data-reveal=curtain][data-revealed=""] img{animation:reveal-settle 1.6s var(--ease-out) var(--reveal-delay,0ms) both}
+
+@keyframes reveal-up{from{opacity:0;translate:0 28px}to{opacity:1;translate:0 0}}
+@keyframes reveal-rise{from{opacity:0;translate:0 44px;filter:blur(6px)}to{opacity:1;translate:0 0;filter:blur(0)}}
+@keyframes reveal-fade{from{opacity:0}to{opacity:1}}
+@keyframes reveal-left{from{opacity:0;translate:-36px 0}to{opacity:1;translate:0 0}}
+@keyframes reveal-right{from{opacity:0;translate:36px 0}to{opacity:1;translate:0 0}}
+@keyframes reveal-zoom{from{opacity:0;translate:0 20px;scale:.94}to{opacity:1;translate:0 0;scale:1}}
+@keyframes reveal-photo{from{opacity:0;translate:0 40px;scale:.86}to{opacity:1;translate:0 0;scale:1}}
+@keyframes reveal-curtain{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes reveal-settle{from{scale:1.18}to{scale:1}}
+
+@media(prefers-reduced-motion:no-preference){
+  /* Hero collage keeps breathing after it lands. */
+  .hero-photo-main[data-revealed=done]{animation:drift 12s ease-in-out infinite}
+  .hero-photo-flower[data-revealed=done]{animation:drift 9s ease-in-out -2s infinite reverse}
+  .hero-photo-coaster[data-revealed=done]{animation:drift 10.5s ease-in-out -5s infinite}
+  @keyframes drift{0%,100%{translate:0 0}50%{translate:0 -11px}}
+
+  /* Chrome entrances. The header persists across client navigation, so this plays on the first load only. */
+  .site-header{animation:header-in .8s var(--ease-out) both}
+  .nav-dropdown-panel{animation:pop-in .24s var(--ease-out) both}
+  .mobile-nav{animation:pop-in .3s var(--ease-out) both}
+  .mobile-categories{animation:pop-in .25s var(--ease-out) both}
+  .craft-faq-item>div:not([hidden]){animation:pop-in .35s var(--ease-out) both}
+  @keyframes header-in{from{opacity:0;translate:0 -24px}to{opacity:1;translate:0 0}}
+  @keyframes pop-in{from{opacity:0;translate:0 -8px}to{opacity:1;translate:0 0}}
+
+  /* Arrow nudges and image easing on hover. */
+  :is(.button,.text-link,.card-link,.bloom-seo-links a,.bloom-category-card,.beginner-mini,.inspiration-tile,.footer-newsletter-link) svg{transition:translate .35s var(--ease-out)}
+  :is(.button,.text-link,.card-link,.bloom-seo-links a,.footer-newsletter-link):hover svg.lucide-arrow-right{translate:4px 0}
+  :is(.card-link,.bloom-category-card,.beginner-mini,.inspiration-tile):hover svg.lucide-arrow-up-right{translate:3px -3px}
+  .beginner-mini{transition:background-color .3s,translate .35s var(--ease-out)}
+  .beginner-mini:hover{translate:6px 0}
+  .category-visual img{transition:scale .7s var(--ease-out)}
+  .bloom-category-card:hover .category-visual img{scale:1.09}
+  .bloom-category-card{transition:transform .35s var(--ease-out),box-shadow .35s var(--ease-out)}
+  .card-image,.inspiration-tile img{transition:transform .7s var(--ease-out)!important}
+  .bloom-why-points svg{transition:translate .4s var(--ease-spring)}
+  .bloom-why-points>div:hover svg{translate:0 -4px}
+
+  /* Reading progress on pattern pages, driven by the scroll position without JavaScript. */
+  @supports(animation-timeline:scroll()){
+    .craft-article::before{content:"";position:fixed;inset:0 0 auto;height:3px;z-index:120;background:var(--coral);transform-origin:0 50%;scale:0 1;animation:read-progress linear both;animation-timeline:scroll(root);pointer-events:none}
+    @keyframes read-progress{to{scale:1 1}}
+  }
+}
