@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title: "Loop & Bloom Crochet | Free Crochet Patterns", description: "Free crochet patterns, colorful projects, and beginner-friendly tutorials.", images: ["/images/patterns/beginner-granny-square.png"] },
   icons: { icon: "/icon.svg" },
   robots: { index: true, follow: true },
+  other: { "google-adsense-account": "ca-pub-4669042139242374" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
